@@ -11,6 +11,20 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)
     {
-        return new int[0];
+        var results = new int[select.Length];
+        var list1ID = 0;
+        var list2ID = 0;
+        for ( var i = 0; i < select.Count(); ++i)
+        {
+            if (select[i] == 1)
+            {
+                results[i] = list1[list1ID++];
+            }
+            else if (select[i] == 2)
+            {
+                results[i] = list2[list2ID++];
+            }
+        }
+        return results;
     }
 }
