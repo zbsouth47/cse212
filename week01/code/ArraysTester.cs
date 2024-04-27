@@ -38,8 +38,13 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        var multiples = new double[length]; //array for results
+        for (var i = 1; i <= length; i++) { //loop over the length variable starting at one, including the length
+            double mult = number * i;
+            multiples[i-1] = mult; //store the multiple in correct location
+        }
 
-        return new double[0]; // replace this return statement with your own
+        return multiples; // replaced return with my array variable
     }
     
     /// <summary>
@@ -52,10 +57,12 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        int size = data.Count - 1; //need to know the location of the last index
+        for (var i = amount; i > 0; i--) { //repeat this loop counting down from 'amount' to zero
+            int temp = data[size]; //temporarily store the value in the last index
+            data.RemoveAt(size); //remove the last index
+            data.Insert(0, temp); //place the removed last index at the beginning of the array
+        }
 
     }
 }
