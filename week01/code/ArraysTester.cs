@@ -1,3 +1,5 @@
+using System.Numerics;
+
 public static class ArraysTester {
     /// <summary>
     /// Entry point for the tests
@@ -34,10 +36,12 @@ public static class ArraysTester {
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        //Plan: We'll need a new variable to store the results array. It will need to be the length passed into
+        //the function. We'll need a loop that iterates over the length variable. It will need to start at one, 
+        //not zero so that we don't get a zero every time. We'll need a local variable to store the current multiple
+        //of the number passed in multipled by our loop variable. We'll store that local variable in the newly declared
+        //results array at the current loop iteration minus one, since we're starting at one. 
+
         var multiples = new double[length]; //array for results
         for (var i = 1; i <= length; i++) { //loop over the length variable starting at one, including the length
             double mult = number * i;
@@ -57,6 +61,14 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
+        //1) Calculate the index of the last item in the array
+        //2) Loop over the amount varable
+        //3) In each iteration of the loop:
+        //  a) Store the value currently in the last index
+        //  b) Delete the value in the last index
+        //  c) Insert that value into the very first index, pushing everything else to the right
+        //The loop will repeat as many times as the amount indicates and then finish. 
+
         int size = data.Count - 1; //need to know the location of the last index
         for (var i = amount; i > 0; i--) { //repeat this loop counting down from 'amount' to zero
             int temp = data[size]; //temporarily store the value in the last index
