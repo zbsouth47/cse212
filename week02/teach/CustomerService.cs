@@ -11,23 +11,67 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: set a valid and an invalid queue size
+        // Expected Result: invalid should set queue size to 10, valid should stay
         Console.WriteLine("Test 1");
+        // set max size less than zero
+        var newQueue = new CustomerService(-2);
+        Console.WriteLine(newQueue);
+        // set valid max size
+        newQueue = new CustomerService(5);
+        Console.WriteLine(newQueue);
 
-        // Defect(s) Found: 
+        // Defect(s) Found: none
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: add customer to queue
+        // Expected Result: customer will be in queue
         Console.WriteLine("Test 2");
+        newQueue = new CustomerService(2);
+        newQueue.AddNewCustomer();
+        Console.WriteLine(newQueue);
+
+        // Defect(s) Found: none
+
+        Console.WriteLine("=================");
+
+        // Test 3
+        // Scenario: add customer to full queue
+        // Expected Result: error message
+        Console.WriteLine("Test 3");
+        newQueue = new CustomerService(1);
+        newQueue.AddNewCustomer();
+        newQueue.AddNewCustomer();
+        Console.WriteLine(newQueue);
+
+        // Defect(s) Found: queue max size wasn't being checked correctly
+
+        Console.WriteLine("=================");
+        // Test 4
+        // Scenario: remove next in line from the queue
+        // Expected Result: next customer should be fremoved from the line
+        Console.WriteLine("Test 4");
+        newQueue = new CustomerService(1);
+        newQueue.AddNewCustomer();
+        newQueue.ServeCustomer();
+        Console.WriteLine(newQueue);
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
+        // Test 5
+        // Scenario: return error message if queue is empty to serve
+        // Expected Result: error message on empty queue
+        Console.WriteLine("Test 5");
+        newQueue.AddNewCustomer();
+        newQueue.ServeCustomer();
+        newQueue.ServeCustomer();
+        Console.WriteLine(newQueue);
+        // Defect(s) Found: queue size check was missing from function
 
+        Console.WriteLine("=================");
         // Add more Test Cases As Needed Below
     }
 
@@ -67,7 +111,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,8 +132,13 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        if (_queue.Count == 0) {
+            Console.WriteLine("No one left to help!");
+            return;
+        }
+
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 
