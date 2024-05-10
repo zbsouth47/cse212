@@ -1,4 +1,6 @@
-﻿public static class DisplaySums {
+﻿using System.Globalization;
+
+public static class DisplaySums {
     public static void Run() {
         DisplaySumPairs(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
         // Should show something like (order does not matter):
@@ -28,6 +30,15 @@
     /// </summary>
     /// <param name="numbers">array of integers</param>
     private static void DisplaySumPairs(int[] numbers) {
+        var pairs = new HashSet<int>();
+        var diff = 0;
+        foreach (var num in numbers) {
+            diff = 10 - num;
+            pairs.Add(diff);
+            if (numbers.Contains(diff) && (pairs.Contains(num) == false)) {
+                Console.WriteLine(num + ", " + diff);
+            }
+        }
         // TODO Problem 2 - This should print pairs of numbers in the given array
     }
 }
