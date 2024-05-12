@@ -77,8 +77,8 @@ public static class SetsAndMapsTester {
 
         // Problem 5: Earthquake
         // Sample Test Cases (may not be comprehensive) 
-        Console.WriteLine("\n=========== Earthquake TESTS ===========");
-        EarthquakeDailySummary();
+        // Console.WriteLine("\n=========== Earthquake TESTS ===========");
+        // EarthquakeDailySummary();
 
         // Sample output from the function.  Number of earthquakes, places, and magnitudes will vary.
         // 1km NE of Pahala, Hawaii - Mag 2.36
@@ -108,6 +108,17 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
+        var pairs = new HashSet<string>();
+        foreach (var word in words) {
+            char[] array = word.ToCharArray();
+            Array.Reverse(array);
+            var pair = new String(array);
+            pairs.Add(word);
+            if (pairs.Contains(pair) && word != pair) {
+                Console.WriteLine($"{word} & {pair}");
+            }
+
+        }
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
@@ -132,6 +143,13 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+            if (degrees.ContainsKey(degree)) {
+                degrees[degree] += 1;
+            }
+            else {
+                degrees.Add(degree, 1);
+            }
         }
 
         return degrees;
@@ -158,7 +176,38 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var wordSet1 = new Dictionary<char, int>();
+        var wordSet2 = new Dictionary<char, int>();
+        foreach (var letter in word1) {
+            var lowerLetter = Char.ToLower(letter);
+            if (wordSet1.ContainsKey(lowerLetter)) {
+                wordSet1[lowerLetter] += 1;
+            }
+            else if (lowerLetter != ' ') {
+                wordSet1.Add(lowerLetter, 1);
+            }
+        }
+        foreach (var letter in word2) {
+            var lowerLetter = Char.ToLower(letter);
+            if (wordSet2.ContainsKey(lowerLetter)) {
+                wordSet2[lowerLetter] += 1;
+            }
+            else if (lowerLetter != ' ') {
+                wordSet2.Add(lowerLetter, 1);
+            }
+        }
+        
+        foreach (var map in wordSet1) {
+            char letter = map.Key;
+            int count = map.Value;
+            // Console.WriteLine($"{letter} = {wordSet2.ContainsKey(letter)}");
+            // Console.WriteLine($"{count} = {wordSet2[letter]}");
+            if (!wordSet2.ContainsKey(letter) || wordSet2[letter] != count) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
