@@ -28,6 +28,18 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void InsertTail(int value) {
         // TODO Problem 1
+        Node newNode = new Node(value);
+        // If the list is empty, then point both head and tail to the new node.
+        if (_head is null) {
+            _head = newNode;
+            _tail = newNode;
+        }
+        // If the list is not empty, then only head will be affected.
+        else {
+            newNode.Prev = _tail; // Connect new node to the previous tail
+            _tail.Next = newNode; // Connect the previous tail to the new node
+            _tail = newNode; // Update the tail to point to the new node
+        }
     }
 
 
@@ -56,6 +68,16 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void RemoveTail() {
         // TODO Problem 2
+        if (_head == _tail) {
+            _head = null;
+            _tail = null;
+        }
+        // If the list has more than one item in it, then only the head
+        // will be affected.
+        else if (_tail is not null) {
+            _tail.Prev!.Next = null;// Disconnect the second node from the first node
+            _tail = _tail.Prev; // Update the head to point to the second node
+        }
     }
 
     /// <summary>
@@ -94,6 +116,23 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void Remove(int value) {
         // TODO Problem 3
+        Node? curr = _head;
+        while (curr is not null) {
+            if (curr.Data == value) {
+                if (curr == _tail) {
+                    RemoveTail();
+                }
+                else if (curr == _head) {
+                    RemoveHead();
+                }
+                else {
+                    curr.Prev!.Next = curr.Next;
+                    curr.Next!.Prev = curr.Prev;
+                }
+                return;
+            }
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
@@ -101,6 +140,23 @@ public class LinkedList : IEnumerable<int> {
     /// </summary>
     public void Replace(int oldValue, int newValue) {
         // TODO Problem 4
+        Node? curr = _head;
+        while (curr is not null) {
+            if (curr.Data == oldValue) {
+                curr.Data = newValue;
+                // if (curr == _tail) {
+                //     RemoveTail();
+                // }
+                // else if (curr == _head) {
+                //     RemoveHead();
+                // }
+                // else {
+                //     curr.Prev!.Next = curr.Next;
+                //     curr.Next!.Prev = curr.Prev;
+                // }
+            }
+            curr = curr.Next;
+        }
     }
 
     /// <summary>
